@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}The Gilded Pen{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+        }
+        .sidebar {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .post-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        .post-title {
+            color: #2c3e50;
+            font-family: 'Playfair Display', serif;
+        }
+        .post-meta {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        .comment-section {
+            margin-top: 30px;
+        }
+        .comment {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .alert {
+            margin-bottom: 20px;
+        }
+        .invalid-feedback {
+            display: block;
+        }
+
+        /* Post Card Styles */
+        .post-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-title {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .post-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .post-title a:hover {
+            color: #3498db;
+        }
+
+        .post-meta {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .post-meta a {
+            color: #3498db;
+        }
+
+        .post-content {
+            color: #34495e;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Styles */
+        .sidebar-widget {
+            margin-bottom: 2rem;
+        }
+
+        .widget-title {
+            color: #2c3e50;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag-cloud .badge {
+            font-size: 0.9rem;
+            padding: 0.5rem 0.75rem;
+            transition: all 0.2s ease;
+        }
+
+        .tag-cloud .badge:hover {
+            background-color: #3498db !important;
+            transform: translateY(-1px);
+        }
+
+        .list-group-item {
+            border: none;
+            border-radius: 4px !important;
+            margin-bottom: 0.25rem;
+            transition: all 0.2s ease;
+        }
+
+        .list-group-item:hover {
+            background-color: #f8f9fa;
+            transform: translateX(5px);
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background-color: #3498db;
+            border-color: #3498db;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+
+        .btn-outline-primary {
+            color: #3498db;
+            border-color: #3498db;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #3498db;
+            border-color: #3498db;
+        }
+
+        /* Badge Styles */
+        .badge {
+            font-weight: 500;
+        }
+
+        .badge.bg-secondary {
+            background-color: #7f8c8d !important;
+        }
+
+        .badge.bg-primary {
+            background-color: #3498db !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'blog:home' %}">The Gilded Pen</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:index' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:post_list' %}">Blog Posts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:blogger_list' %}">Bloggers</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <span class="nav-link">Welcome, {{ user.username }}</span>
+                        </li>
+                        <li class="nav-item">
+                            <form method="post" action="{% url 'logout' %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn nav-link">Logout</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'blog:signup' %}">Sign Up</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% block content %}{% endblock %}
+            </div>
+
+            <div class="col-md-4">
+                {% if user.is_authenticated %}
+                    <div class="sidebar-widget post-card mb-4">
+                        <h4 class="widget-title">Quick Actions</h4>
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'blog:post_create' %}" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Create New Post
+                            </a>
+                            <a href="{% url 'blog:post_list' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-list"></i> View All Posts
+                            </a>
+                        </div>
+                    </div>
+
+                    {% if categories %}
+                        <div class="sidebar-widget post-card mb-4">
+                            <h4 class="widget-title">Categories</h4>
+                            <div class="list-group">
+                                {% for category in categories %}
+                                    <a href="{% url 'blog:category_detail' category.slug %}" 
+                                       class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        {{ category.name }}
+                                        <span class="badge bg-primary rounded-pill">{{ category.posts.count }}</span>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if tags %}
+                        <div class="sidebar-widget post-card mb-4">
+                            <h4 class="widget-title">Popular Tags</h4>
+                            <div class="tag-cloud">
+                                {% for tag in tags %}
+                                    <a href="{% url 'blog:tag_detail' tag.slug %}" 
+                                       class="badge bg-secondary text-decoration-none me-1 mb-1">
+                                        {{ tag.name }} ({{ tag.posts.count }})
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light mt-5">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>The Gilded Pen</h5>
+                    <p>A place for thoughtful writing and engaging discussions.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; {% now "Y" %} The Gilded Pen. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

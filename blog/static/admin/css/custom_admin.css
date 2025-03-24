@@ -1,0 +1,80 @@
+/* Custom styles for the admin interface */
+.field-status {
+    font-weight: bold;
+}
+
+.field-status:contains("Published") {
+    color: #28a745;
+}
+
+.field-status:contains("Draft") {
+    color: #dc3545;
+}
+
+.field-comment_count {
+    text-align: center;
+}
+
+/* Improve fieldset appearance */
+.module h2, .module caption {
+    background: #2c3e50;
+    color: white;
+}
+
+/* Style action buttons */
+.object-tools a:link, .object-tools a:visited {
+    background: #2c3e50;
+}
+
+.object-tools a:hover {
+    background: #34495e;
+}
+
+/* Style submit row */
+.submit-row input[type="submit"] {
+    background: #2c3e50;
+}
+
+.submit-row input[type="submit"]:hover {
+    background: #34495e;
+}
+
+/* Style list filters */
+.module.filtered h2 {
+    background: #34495e;
+}
+
+/* Style action buttons */
+.actions .button {
+    background: #2c3e50;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.actions .button:hover {
+    background: #34495e;
+}
+
+/* Improve table readability */
+#result_list tbody tr:nth-child(odd) {
+    background-color: #f8f9fa;
+}
+
+#result_list tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Style form controls */
+.vTextField, .vURLField, .vLargeTextField {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+
+.vTextField:focus, .vURLField:focus, .vLargeTextField:focus {
+    border-color: #2c3e50;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.25);
+}

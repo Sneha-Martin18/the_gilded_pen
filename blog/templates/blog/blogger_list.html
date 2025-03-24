@@ -1,0 +1,59 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Our Bloggers - The Gilded Pen{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Our Bloggers</h1>
+
+{% if bloggers %}
+    <div class="row">
+        {% for blogger in bloggers %}
+            <div class="col-md-6 mb-4">
+                <div class="post-card h-100">
+                    <div class="d-flex align-items-center mb-3">
+                        {% if blogger.profile_picture %}
+                            <img src="{{ blogger.profile_picture.url }}" alt="{{ blogger.user.username }}" class="rounded-circle me-3" style="width: 64px; height: 64px; object-fit: cover;">
+                        {% else %}
+                            <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3" style="width: 64px; height: 64px;">
+                                <i class="fas fa-user fa-2x"></i>
+                            </div>
+                        {% endif %}
+                        <div>
+                            <h2 class="h4 mb-1">
+                                <a href="{% url 'blog:blogger_detail' blogger.user.username %}" class="text-decoration-none">{{ blogger.user.username }}</a>
+                            </h2>
+                            {% if blogger.website %}
+                                <a href="{{ blogger.website }}" target="_blank" class="text-muted text-decoration-none">
+                                    <i class="fas fa-globe"></i> Website
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    {% if blogger.bio %}
+                        <p class="mb-3">{{ blogger.bio|truncatewords:30 }}</p>
+                    {% else %}
+                        <p class="text-muted mb-3">No bio available.</p>
+                    {% endif %}
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">
+                            <i class="fas fa-pen-nib"></i> {{ blogger.user.blog_posts.count }} posts
+                        </span>
+                        <a href="{% url 'blog:blogger_detail' blogger.user.username %}" class="btn btn-outline-primary btn-sm">View Profile</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="post-card">
+        <p>No bloggers have joined yet.</p>
+        {% if user.is_authenticated %}
+            <p>Update your profile to appear in this list!</p>
+        {% else %}
+            <p>Please <a href="{% url 'login' %}">login</a> to create your blogger profile.</p>
+        {% endif %}
+    </div>
+{% endif %}
+{% endblock %}

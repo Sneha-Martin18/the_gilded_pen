@@ -1,0 +1,45 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Welcome to The Gilded Pen{% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+    <h1 class="display-4">Welcome to The Gilded Pen</h1>
+    <p class="lead">A space where words come to life and stories find their voice.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="post-card">
+            <h2>About Our Blog</h2>
+            <p>The Gilded Pen is a community of writers, thinkers, and storytellers. Here, we celebrate the art of writing and the power of words to inspire, educate, and connect.</p>
+            <p>Whether you're a seasoned writer or just beginning your journey, you'll find a welcoming space to share your thoughts and engage with others.</p>
+            <div class="text-center mt-4">
+                <a href="{% url 'blog:post_list' %}" class="btn btn-primary">Explore Our Posts</a>
+                <a href="{% url 'blog:blogger_list' %}" class="btn btn-outline-primary ms-2">Meet Our Writers</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-6">
+        <div class="post-card h-100">
+            <h3><i class="fas fa-feather-alt"></i> For Writers</h3>
+            <p>Share your stories, insights, and expertise with our growing community. Join us as a contributor and let your voice be heard.</p>
+            {% if user.is_authenticated %}
+                <p>Welcome back! Continue sharing your thoughts with our community.</p>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline-primary">Login to Contribute</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="post-card h-100">
+            <h3><i class="fas fa-book-reader"></i> For Readers</h3>
+            <p>Discover thoughtful articles, engaging stories, and diverse perspectives from our community of writers.</p>
+            <a href="{% url 'blog:post_list' %}" class="btn btn-outline-primary">Start Reading</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
