@@ -26,7 +26,12 @@ SECRET_KEY = 'django-insecure-tf)pq*m455n=v4+#=3jeu858r-&p#!ozufhc^q3uxo8c14#ftr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*'] # which all requests ae acceble for the host, accesible to anyone
+
+CSRF_TRUSTED_ORIGINS = [
+    'blogmdn-c7gyfqbjarggb4ea.centralus-01.azurewebsites.net'
+]
+
 
 
 # Application definition
