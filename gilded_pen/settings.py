@@ -26,10 +26,10 @@ SECRET_KEY = 'django-insecure-tf)pq*m455n=v4+#=3jeu858r-&p#!ozufhc^q3uxo8c14#ftr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*'] # which all requests ae acceble for the host, accesible to anyone
-
-CSRF_TRUSTED_ORIGINS = [
-    'blogmdn-c7gyfqbjarggb4ea.centralus-01.azurewebsites.net'
+ ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'blogmdn-c7gyfqbjarggb4ea.centralus-01.azurewebsites.net',  # Your Azure domain
 ]
 
 
