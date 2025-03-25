@@ -29,7 +29,9 @@ DEBUG = True
  ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'blogmdn-c7gyfqbjarggb4ea.centralus-01.azurewebsites.net',  # Your Azure domain
+ ]
+  CSRF_TRUSTED_ORIGINS = [
+    "https://blogmdn-c7gyfqbjarggb4ea.centralus-01.azurewebsites.net",
 ]
 
 
